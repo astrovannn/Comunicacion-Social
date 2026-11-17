@@ -1,56 +1,133 @@
 /**
  * ─────────────────────────────────────────────────────────────────────────
- *  CONTENIDO PROVISIONAL
- *  Todo lo de este archivo es de relleno. Reemplázalo con tus obras reales
- *  (título, autor, fecha, técnica, dimensiones, historia e imagen) y luego
- *  ejecuta `npm run seed` en /server para actualizar la base de datos.
+ *  CONTENIDO DEL MUSEO
+ *  Después de editar este archivo ejecuta `npm run seed` en /server para
+ *  actualizar la base de datos (sin eso la página sigue mostrando lo anterior).
  *
  *  - slug:      identificador único en minúsculas y con guiones (no lo cambies
  *               después de publicar o se perderá el progreso de esa obra).
- *  - imageUrl:  ruta de la imagen (ej. /art/mi-foto.jpg dentro de client/public/art).
+ *  - imageUrl:  ruta de la imagen dentro de client/public/art.
  *  - aspect:    ancho/alto del marco (0.8 vertical, 1 cuadrado, 1.5 horizontal).
  *  - room:      número de sala; roomName: nombre de la sala.
  *  - mandatory: false si la obra no debe ser obligatoria para el recorrido.
+ *  - author, date, technique, dimensions: opcionales; si se dejan vacíos
+ *               simplemente no se muestran en la ficha de la obra.
  *  - extra:     datos adicionales opcionales [{ label, value }].
  * ─────────────────────────────────────────────────────────────────────────
  */
 
-const PROVISIONAL_TEXT =
-  '[Texto provisional] Aquí irá la historia de la obra: cómo nació, qué la inspiró y qué quiso expresar su autor. ' +
-  'Puedes escribir varios párrafos; el modal se desplaza si el texto es largo.';
-
-const base = (n, rest) => ({
+/** Fotos horizontales de 3:2 → aspect 1.5. */
+const photo = (n, { room, roomName, order, title, description, scene, alt }) => ({
   slug: `obra-${n}`,
-  title: `Obra ${['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X'][n - 1]}`,
-  author: 'Por definir',
-  date: 'Por definir',
-  technique: 'Por definir',
-  dimensions: 'Por definir',
-  description: PROVISIONAL_TEXT,
+  title,
+  author: '',
+  date: '',
+  technique: '',
+  dimensions: '',
+  description,
   imageUrl: `/art/obra-${n}.jpg`,
-  alt: 'Composición abstracta provisional',
-  order: 0,
+  alt,
+  aspect: 1.5,
+  room,
+  roomName,
+  order,
   mandatory: true,
-  extra: [{ label: 'Colección', value: 'Por definir' }],
-  ...rest,
+  extra: [{ label: 'Escena', value: scene }],
 });
 
-// Distribución del museo: 4 salas con 4 · 2 · 2 · 2 obras (10 en total).
+const TERRASSE = { room: 1, roomName: 'Terrasse' };
+const ADUANA = { room: 2, roomName: 'Plaza de la Aduana' };
+const BOLIVAR = { room: 3, roomName: 'Museo Simón Bolívar' };
+const BIBLIOTECA = { room: 4, roomName: 'Biblioteca Universidad del Norte' };
+
 export const artworks = [
-  // Sala I · Origen — 4 obras
-  base(1, { room: 1, roomName: 'Origen', order: 1, aspect: 0.8 }),
-  base(2, { room: 1, roomName: 'Origen', order: 2, aspect: 1.25 }),
-  base(3, { room: 1, roomName: 'Origen', order: 3, aspect: 1 }),
-  base(4, { room: 1, roomName: 'Origen', order: 4, aspect: 0.75 }),
-  // Sala II · Materia — 2 obras
-  base(5, { room: 2, roomName: 'Materia', order: 1, aspect: 1.5 }),
-  base(6, { room: 2, roomName: 'Materia', order: 2, aspect: 0.8 }),
-  // Sala III · Luz — 2 obras
-  base(7, { room: 3, roomName: 'Luz', order: 1, aspect: 1.2 }),
-  base(8, { room: 3, roomName: 'Luz', order: 2, aspect: 1 }),
-  // Sala IV · Eco — 2 obras
-  base(9, { room: 4, roomName: 'Eco', order: 1, aspect: 1.5 }),
-  base(10, { room: 4, roomName: 'Eco', order: 2, aspect: 0.8 }),
+  // Sala I · Terrasse
+  photo(1, {
+    ...TERRASSE,
+    order: 1,
+    title: 'Ballet',
+    description: 'Principios de delicadeza y precisión en la técnica.',
+    scene: 'Lau',
+    alt: 'Una bailarina de ballet con tutú verde y dorado posa en puntas junto a un panel rojo de patrón ondulado.',
+  }),
+  photo(2, {
+    ...TERRASSE,
+    order: 2,
+    title: 'Cumbia',
+    description: 'Indicios de picardía, coqueteo y recital poético con el cuerpo.',
+    scene: 'Santiago',
+    alt: 'Un bailarín con sombrero vueltiao, camisa blanca y capa roja brillante se apoya en el marco de un panel rojo.',
+  }),
+  photo(3, {
+    ...TERRASSE,
+    order: 3,
+    title: 'Sinfonía',
+    description: 'Armonía del lenguaje que admira otra pasión.',
+    scene: 'Lau danza, Santiago admira atrás',
+    alt: 'Visto desde atrás, un joven con capa roja brillante observa a una bailarina que cruza el salón rojo al fondo.',
+  }),
+  photo(4, {
+    ...TERRASSE,
+    order: 4,
+    title: 'Perspectiva',
+    description: 'Sentir de equivalencia, contingencia contraria.',
+    scene: 'Perspectiva de Santiago',
+    alt: 'Una bailarina posa en puntas en un salón de mesas y sillas rojas, mientras un joven la mira desde una mesa al fondo.',
+  }),
+
+  // Sala II · Plaza de la Aduana
+  photo(5, {
+    ...ADUANA,
+    order: 1,
+    title: 'Dualidad',
+    description: 'Expresiones encontradas bajo una misma sintonía.',
+    scene: 'Aduana, separados por una columna',
+    alt: 'En un corredor de columnas de madera, una bailarina de verde posa a un lado y un bailarín levanta su sombrero vueltiao al otro.',
+  }),
+  photo(6, {
+    ...ADUANA,
+    order: 2,
+    title: 'Cortejo de luz',
+    description: 'Galanteo admirable que inspira ternura.',
+    scene: 'Aduana, banquitos',
+    alt: 'Frente a una pared amarilla, un bailarín sentado en una banca extiende un pequeño objeto rojo hacia una bailarina recostada en otra banca.',
+  }),
+
+  // Sala III · Museo Simón Bolívar
+  photo(7, {
+    ...BOLIVAR,
+    order: 1,
+    title: 'Notar',
+    description: 'Llevaba consigo mismo el arte de mirar.',
+    scene: 'Museo, Simón Bolívar',
+    alt: 'En una sala de museo con retratos al óleo, un bailarín con sombrero vueltiao está sentado en una silla y una bailarina se apoya junto a él.',
+  }),
+  photo(8, {
+    ...BOLIVAR,
+    order: 2,
+    title: 'Tacto',
+    description: 'Un sutil roce físico que les logra enlazar.',
+    scene: 'Museo, sentados juntos',
+    alt: 'Una bailarina y un bailarín sentados juntos en un sillón tallado, frente a vitrinas con libros sobre fondo rojo.',
+  }),
+
+  // Sala IV · Biblioteca Universidad del Norte
+  photo(9, {
+    ...BIBLIOTECA,
+    order: 1,
+    title: 'Arte',
+    description: 'Lírica visual de cohesión etérea.',
+    scene: 'Ventanal, cerca a las escaleras',
+    alt: 'En una escalera frente a un gran vitral de colores, una bailarina y un bailarín se toman de las manos; él sostiene su sombrero vueltiao.',
+  }),
+  photo(10, {
+    ...BIBLIOTECA,
+    order: 2,
+    title: 'Coincidir',
+    description: 'Metáfora de unión como soplo incorpóreo que da vida.',
+    scene: 'Ventanal, juntos',
+    alt: 'Vista desde arriba, una bailarina y un bailarín posan juntos junto a la baranda de un gran vitral de colores.',
+  }),
 ];
 
 export const sections = [
@@ -58,23 +135,23 @@ export const sections = [
     slug: 'inicio',
     order: 1,
     title: 'Bienvenido al otro lado',
-    subtitle: '[Texto provisional] Has completado el recorrido: ahora puedes explorar el resto del sitio.',
+    subtitle: 'Has completado el recorrido: ahora puedes explorar el resto del sitio.',
     paragraphs: [
-      '[Texto provisional] Esta es la página de inicio. Aquí puedes presentar tu trabajo, tu propuesta o lo que quieras contar después de la exposición.',
+      'Recorriste diez obras en cuatro escenarios: la Terrasse, la Plaza de la Aduana, el Museo Simón Bolívar y la Biblioteca de la Universidad del Norte. Aquí puedes volver a abrir cualquiera de ellas.',
     ],
   },
   {
     slug: 'sobre-mi',
     order: 2,
     title: 'Sobre nosotros',
-    subtitle: '[Texto provisional] Las cuatro personas detrás de la exposición.',
-    paragraphs: ['[Texto provisional] Cuenta aquí qué las une y cómo trabajan en equipo.'],
-    // Una entrada por persona. `photo` es opcional (ej. '/team/ana.jpg' en client/public/team/).
+    subtitle: 'Las cuatro personas detrás de la exposición.',
+    paragraphs: ['Esta exposición fue posible gracias al trabajo de estas cuatro personas.'],
+    // `photo` es opcional (ej. '/team/laura.jpg' en client/public/team/); `bio` también.
     people: [
-      { name: 'Nombre Apellido', role: 'Rol o especialidad', bio: '[Texto provisional] Breve presentación de la primera persona.', photo: '' },
-      { name: 'Nombre Apellido', role: 'Rol o especialidad', bio: '[Texto provisional] Breve presentación de la segunda persona.', photo: '' },
-      { name: 'Nombre Apellido', role: 'Rol o especialidad', bio: '[Texto provisional] Breve presentación de la tercera persona.', photo: '' },
-      { name: 'Nombre Apellido', role: 'Rol o especialidad', bio: '[Texto provisional] Breve presentación de la cuarta persona.', photo: '' },
+      { name: 'Laura Valentina Ariza Ruiz', role: 'Modelo, editora de fotografía y página web', bio: '', photo: '' },
+      { name: 'Lusiana Sofia Vanegas Barrios', role: 'Cámara', bio: '', photo: '' },
+      { name: 'Marianne Andrea Rojas Rubio', role: 'Apoyo en cámara y logística', bio: '', photo: '' },
+      { name: 'Sofía Hernández Paz', role: 'Apoyo a cámara', bio: '', photo: '' },
     ],
   },
 ];

@@ -1,4 +1,5 @@
 import { useInView } from '../hooks/useInView.js';
+import { caption } from '../utils/format.js';
 
 /**
  * Una obra colgada en la pared: marco, paspartú, foco de luz y placa.
@@ -45,7 +46,7 @@ export default function Artwork({ artwork, discovered, index, onOpen }) {
 
       <div className="artwork__plaque">
         <strong>{artwork.title}</strong>
-        <span>{discovered ? `${artwork.author} · ${artwork.date}` : 'Toca para descubrir'}</span>
+        <span>{discovered ? caption(artwork) : 'Toca para descubrir'}</span>
       </div>
     </article>
   );

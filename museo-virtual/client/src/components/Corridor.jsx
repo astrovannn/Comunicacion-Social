@@ -1,5 +1,5 @@
 import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { roman } from '../utils/format.js';
+import { caption, roman } from '../utils/format.js';
 import { FINALE } from '../config.js';
 import { build, W, H, EYE, STEP } from '../utils/corridorLayout.js';
 
@@ -250,7 +250,7 @@ function WallArtwork({ it, visited, onOpen, local }) {
       </button>
       <div className="wa__plaque">
         <strong>{artwork.title}</strong>
-        <span>{discovered ? `${artwork.author} · ${artwork.date}` : 'Toca para descubrir'}</span>
+        <span>{discovered ? caption(artwork) : 'Toca para descubrir'}</span>
       </div>
     </div>
   );

@@ -18,3 +18,6 @@ export function groupByRoom(artworks) {
 /** Respeta la preferencia del sistema de reducir animaciones. */
 export const prefersReducedMotion = () =>
   typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/** Subtítulo de una obra: "autor · fecha" con lo que exista; si no hay nada, el nombre de la sala. */
+export const caption = (art) => [art.author, art.date].filter(Boolean).join(' · ') || art.roomName || '';

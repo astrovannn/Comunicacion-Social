@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { api } from '../services/api.js';
 import ArtworkModal from './ArtworkModal.jsx';
 import Portal from './Portal.jsx';
-import { groupByRoom, roman } from '../utils/format.js';
+import { caption, groupByRoom, roman } from '../utils/format.js';
 import StatusMessage from './StatusMessage.jsx';
 
 /**
@@ -87,7 +87,7 @@ export default function SiteSection({ slug, artworks = [], onBackToMuseum }) {
                           <img src={art.imageUrl} alt={art.alt || art.title} loading="lazy" />
                         </span>
                         <strong>{art.title}</strong>
-                        <span>{art.author} · {art.date}</span>
+                        <span>{caption(art)}</span>
                       </button>
                     </li>
                   ))}
@@ -110,7 +110,7 @@ export default function SiteSection({ slug, artworks = [], onBackToMuseum }) {
                 )}
                 <h2>{person.name}</h2>
                 <p className="person__role">{person.role}</p>
-                <p>{person.bio}</p>
+                {person.bio && <p>{person.bio}</p>}
               </li>
             ))}
           </ul>
