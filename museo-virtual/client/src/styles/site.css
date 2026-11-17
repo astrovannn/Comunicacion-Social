@@ -1,0 +1,192 @@
+/* Secciones desbloqueadas: Inicio y Sobre nosotros. */
+.site-section {
+  min-height: calc(100svh - var(--nav-h));
+  padding: clamp(40px, 9vw, 96px) 20px 64px;
+}
+
+.site-section__inner {
+  max-width: 44rem;
+  margin: 0 auto;
+}
+
+.site-section h1 {
+  margin: 0 0 1rem;
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(2.2rem, 7vw, 4rem);
+  line-height: 1.08;
+  letter-spacing: 0.01em;
+}
+
+.site-section__lead {
+  margin: 0 0 2rem;
+  font-size: 1.2rem;
+  color: var(--muted);
+}
+
+.site-section__body p {
+  margin: 0 0 1.1rem;
+  font-size: 1.05rem;
+}
+
+.site-section__back {
+  margin-top: 2.5rem;
+}
+
+/* Entrada escalonada del contenido para que la transición se sienta fluida. */
+.site-section__inner > * {
+  animation: rise-site 0.8s var(--ease) both;
+}
+.site-section__inner > :nth-child(2) {
+  animation-delay: 0.08s;
+}
+.site-section__inner > :nth-child(3) {
+  animation-delay: 0.16s;
+}
+.site-section__inner > :nth-child(n + 4) {
+  animation-delay: 0.24s;
+}
+
+@keyframes rise-site {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+
+/* ───────────── Inicio: obras por sala ───────────── */
+.catalog {
+  margin-top: 3rem;
+}
+
+.catalog__room + .catalog__room {
+  margin-top: 3rem;
+}
+
+.catalog__room h2 {
+  margin: 0 0 1.2rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 1.6rem;
+}
+
+.catalog__room h2 small {
+  margin-right: 0.6rem;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--brass);
+}
+
+.catalog__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 28px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.catalog__item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.catalog__img {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  margin-bottom: 8px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  transition: box-shadow 0.3s;
+}
+
+.catalog__img img {
+  max-width: 82%;
+  max-height: 82%;
+  aspect-ratio: var(--aspect);
+  object-fit: cover;
+  box-shadow: 0 8px 16px rgba(60, 38, 14, 0.25);
+}
+
+.catalog__item:hover .catalog__img,
+.catalog__item:focus-visible .catalog__img {
+  box-shadow: 0 0 0 2px var(--brass);
+}
+
+.catalog__item strong {
+  font-family: var(--font-serif);
+}
+
+.catalog__item span:last-child {
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+/* ───────────── Sobre nosotros: 4 personas ───────────── */
+.people {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 28px;
+  margin: 3rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.person {
+  padding: 24px 20px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  text-align: center;
+}
+
+.person h2 {
+  margin: 14px 0 0;
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 1.3rem;
+}
+
+.person p {
+  margin: 8px 0 0;
+  font-size: 0.92rem;
+  color: var(--muted);
+}
+
+.person .person__role {
+  margin-top: 2px;
+  font-size: 0.74rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--brass);
+}
+
+.person__photo {
+  display: grid;
+  place-items: center;
+  width: 112px;
+  height: 112px;
+  margin: 0 auto;
+  border-radius: 50%;
+  object-fit: cover;
+  background: linear-gradient(145deg, #d9c7a0, #b89b66);
+  color: #fffaf0;
+  font-family: var(--font-serif);
+  font-size: 2rem;
+}
