@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "content": "node scripts/export-content.mjs",
     "build": "vite build",
+    "build:static": "node scripts/export-content.mjs && vite build",
     "preview": "vite preview"
   },
   "dependencies": {

@@ -1,0 +1,9 @@
+# Netlify: versión estática (sin servidor ni base de datos).
+# Se lee desde la carpeta base del sitio (museo-virtual/client).
+[build]
+  command = "npm run build:static"
+  publish = "dist"
+
+[build.environment]
+  VITE_STATIC = "true"
+  NODE_VERSION = "22"
